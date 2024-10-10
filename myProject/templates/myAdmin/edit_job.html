@@ -1,0 +1,113 @@
+{% extends "common/master.html" %}
+
+{% block body %}
+
+{% include 'layouts/navbar.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            
+            {% for d in data %}
+            <div class="profile-card text-center">
+                <h2 class="mt-3">Update {{data.job_title}} Job</h2>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="contact_no">Job Title</label>
+                        <input type="text" class="form-control" name="job_title" value="{{d.job_title}}" id="contact_no" required>
+                        <input type="hidden" class="form-control" name="id" value="{{d.id}}">
+                    </div>
+                    <label for="contact_no">Job Type</label>
+                    <select id="employmentType" class="form-control" name="employmentType" required>
+                        <option value="" selected disabled>Select Type</option>
+                        <option value="full_time"
+                        
+                        {% if d.job_type == "full_time" %}
+                        selected
+                            
+                        {% endif %}
+                            
+                        >Full-Time</option>
+                        <option value="part_time"
+                        {% if d.job_type == "part_time" %}
+                        selected
+                            
+                        {% endif %}>Part-Time</option>
+                        <option value="contract" 
+                        {% if d.job_type == "contract" %}
+                        selected
+                            
+                        {% endif %}>Contract</option>
+                        <option value="internship"
+                        {% if d.job_type == "internship" %}
+                        selected
+                            
+                        {% endif %}>Internship</option>
+                        <option value="temporary"
+                        {% if d.job_type == "temporary" %}
+                        selected
+                            
+                        {% endif %}>Temporary</option>
+                    </select>
+
+
+                    <div class="form-group">
+                        <label for="age">Job Description</label>
+                        <textarea type="number" class="form-control" name="job_description" id="age">{{d.job_description}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Company Logo</label>
+                        
+                        {% if d.company_logo %}
+                        <img src="/{{d.company_logo}}" alt="Company Logo" width="100"  height="100">
+                        <input type="hidden" name="old_company_logo" value="{{d.company_logo}}" >
+
+                            
+                        {% endif %}
+                            
+                        <input type="file" class="form-control" name="new_company_logo" id="dob">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Company Name</label>
+                        <input type="text" class="form-control" name="company_name" value="{{d.company_name}}"  id="dob" required>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="dob">Job Location</label>
+                        <input type="text" class="form-control" name="job_location" value="{{d.job_location}}"  id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Salary</label>
+                        <input type="text" class="form-control" name="salary" value="{{d.salary}}"  id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Qualifications</label>
+                        <input type="text" class="form-control" name="qualifications" value="{{d.qualifications}}"  id="dob" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob">Application Deadline</label>
+                        <input type="date" class="form-control" name="deadline" value="{{d.deadline|date:'Y-m-d'}}"  id="dob" required>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Update Job</button>
+                </form>
+            </div>
+            {% endfor %}
+                
+
+        </div>
+    </div>
+</div>
+
+{% include 'layouts/footer.html' %}
+
+{% endblock body %}

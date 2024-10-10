@@ -1,0 +1,73 @@
+{% extends "common/master.html" %}
+
+{% block body %}
+
+{% include 'layouts/navbar.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="profile-card">
+                <h2 class="mt-3">Add Basic Information</h2>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="contact_no">Contact No</label>
+                        <input type="text" class="form-control my-2" name="contact_no" id="contact_no" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" class="form-control my-2" name="age" id="age" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Present Address</label>
+                        <input type="text" class="form-control my-2" name="present_address" id="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Permanent Address</label>
+                        <input type="text" class="form-control my-2" name="permanent_address" id="age" required>
+                    </div>
+
+                    
+                    {% if user.user_type == "recruiter" %}
+                    <div class="form-group">
+                        <label for="age">Company Website</label>
+                        <input type="text" class="form-control my-2" name="com_web" id="age">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Linkedin URL</label>
+                        <input type="text" class="form-control my-2" name="linkedin" id="age">
+                    </div>
+                        
+                    {% endif %}
+                        
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" class="form-control my-2" name="dob" id="dob" required>
+                    </div>
+
+                    
+                    {% if user.user_type == 'seeker' %}
+                    <div class="form-group">
+                        <label for="career_summary">Career Summary</label>
+                        <textarea class="form-control my-2" name="career_summary" id="career_summary" rows="3" required></textarea>
+                    </div>
+                        
+                    {% endif %}
+                        
+
+                    <button type="submit" class="btn btn-primary my-2">Save Information</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'layouts/footer.html' %}
+
+{% endblock body %}

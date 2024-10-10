@@ -1,0 +1,81 @@
+{% extends "common/master.html" %}
+
+
+
+
+
+
+{% block body %}
+
+
+{% include 'layouts/navbar.html' %}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        {% include 'layouts/messages.html' %}
+        <div class="col-md-6">
+            <div class="profile-card">
+                <img src="/{{user.profile_img}}" alt="Profile Picture" class="profile-image">
+                <h2 class="mt-3">{{user.first_name}} {{user.last_name}}</h2>
+                {% if user.user_type == "seeker" %}
+                <p class="text-muted">{{basic_info.designation}}</p>
+                {% endif %}
+                <hr>
+                
+                {% if user.user_type == "recruiter" %}
+                    <a class="btn btn-outline-secondary" href="{% url 'created_job_by_recruiter' %}">Created Jobs</a>
+                    <a class="btn btn-secondary" href="{% url 'add_job' %}">Add a New Job</a><hr>
+                    
+                {% elif user.user_type == "seeker" %}   
+                    <a class="btn btn-secondary" href="{% url 'applied_jobs' %}">Applied Jobs</a> 
+                    <a class="btn btn-outline-warning" href="{% url 'my_settings' %}">Settings</a> 
+                {% endif %}
+                
+                {% if basic_info and user.user_type == "seeker" or user.user_type == "recruiter" %}
+                    <a class="btn btn-primary" href="{% url 'edit_basic_info' basic_info.id %}">Edit Basic info</a><hr>
+                    <a class="btn btn-outline-danger" href="{% url 'change_password' %}">Change Password</a>
+
+                {% elif user.user_type == "seeker" %}
+                    <a class="btn btn-primary" href="{% url 'add_basic_info' %}">Add Basic Information</a>
+
+                {% else %}
+                <a class="btn btn-primary" href="{% url 'add_basic_info' %}">Add Contact Information</a>
+
+                {% endif %}
+                    
+                <hr>
+                <div>
+                    
+                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Contact No:</strong> {{basic_info.contact_no}}</p>
+                    <p><strong>Age:</strong> {{basic_info.age}}</p>
+                    <p><strong>Date of Birth:</strong> {{basic_info.dob}}</p>
+                    <p><strong>Gender:</strong> {{user.gender}}</p>
+                    <p><strong>Present Address:</strong> {{basic_info.present_address}}</p>
+                    <p><strong>Permanent Address:</strong> {{basic_info.permanent_address}}</p>
+                    
+                    {% if user.user_type == "recruiter" %}
+                    <p><strong>Website URL:</strong><a href="/{{basic_info.company_website}}" target="_blank"> Go to Our Company Website</a></p>
+                    <p><strong>Linkedin URL:</strong><a href="{{basic_info.linkedin}}" target="_blank"> Go to my Linkedin Profile</a></p>
+                        
+                    {% endif %}
+                        
+                </div>
+                <hr>
+                
+                {% if user.user_type == "seeker" %}
+                <h5>Career Summary</h5>
+                <p class="text-muted">{{basic_info.career_summary}}</p>
+                {% endif %}
+                    
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'layouts/footer.html' %}
+
+    
+{% endblock body %}
+    

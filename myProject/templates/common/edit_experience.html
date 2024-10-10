@@ -1,0 +1,64 @@
+{% extends "common/master.html" %}
+
+
+
+{% block body %}
+
+
+{% include 'layouts/navbar.html' %}
+
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <h2>Add your educations here</h2>
+          {% include 'layouts/messages.html' %}
+          <form action="" method="POST">
+            {% csrf_token %}
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+              <input type="text" value="{{ experience.job_title }}" name="job_title" />
+              <input type="hidden" name="experience_id"  value="{{ experience.id }}" />
+  
+              <label class="form-label" for="form1Example13">Job Title</label>
+            </div>
+  
+  
+  
+            <div data-mdb-input-init class="form-outline mb-4">
+              <input type="text" name="company_name" value="{{ experience.company_name }}" />
+              <label class="form-label" for="form1Example13">Company Name</label>
+            </div>
+  
+            <div data-mdb-input-init class="form-outline mb-4">
+              <input type="date" value="{{ experience.start_date|date:'Y-m-d' }}" name="start_date" />
+              <label class="form-label" for="form1Example13">Start Date</label>
+            </div>
+  
+            <div data-mdb-input-init class="form-outline mb-4">
+              <input type="date" name="end_date" value="{{ experience.end_date|date:'Y-m-d' }}" />
+              <label class="form-label" for="form1Example13">End Date</label>
+            </div>
+  
+            <div data-mdb-input-init class="form-outline mb-4">
+              <textarea type="text" name="description">{{experience.description}}</textarea>
+              <label class="form-label" for="form1Example13">Description</label>
+            </div>
+  
+  
+  
+  
+            <button class="btn btn-success" type="submit">Update Experience</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+{% include 'layouts/footer.html' %}
+    
+{% endblock body %}
+    

@@ -1,0 +1,70 @@
+{% extends "common/master.html" %}
+
+
+
+
+
+{% block body %}
+
+        <!-- Navbar Start -->
+        {% include 'layouts/navbar.html' %}
+        <!-- Navbar End -->
+
+        <!-- Jobs Start -->
+        <div class="container-xxl py-5">
+            <div class="container">
+                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1>
+                <h1 class="my-5 wow fadeInUp" data-wow-delay="0.2s">You are searching for "{{query}}"</h1>
+                <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            
+                        {% for jo in job %}
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4 wow fadeInUp" data-wow-delay="0.3s">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="flex-shrink-0 img-fluid border rounded" src="/{{jo.company_logo}}" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">{{jo.job_title}}</h5>
+                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{jo.job_location}}</span>
+                                            {% comment %} <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>Full Time</span> {% endcomment %}
+                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>{{jo.salary}}BDT</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
+                                            
+                                            {% if user.user_type == "recruiter" %}
+                                                <a class="btn btn-primary" href="{% url 'view_job' jo.id %}">View</a>
+                                            {% else %}
+                                                <a class="btn btn-primary" href="{% url 'view_job' jo.id %}">Apply Now</a>
+                                            {% endif %}
+                                                
+                                   
+                                                
+                                  
+                                        </div>
+                                        <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: {{jo.deadline}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Jobs End -->
+
+
+
+        <!-- Footer Start -->
+        {% include 'layouts/footer.html' %}
+        <!-- Footer End -->
+
+
+
+    
+{% endblock body %}
+    

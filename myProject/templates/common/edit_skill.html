@@ -1,0 +1,78 @@
+{% extends "common/master.html" %}
+
+
+
+{% block body %}
+
+
+{% include 'layouts/navbar.html' %}
+
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <h2>Add your skills here</h2>
+              {% include 'layouts/messages.html' %}
+          <form action="" method="POST">
+              {% csrf_token %}
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <input type="hidden" name="id" value="{{skill.id}}">
+              <select name="skill_id" style="width: 100%;" class="form-control form-control-lg" id="roleSelect">
+                <option value="" disabled selected>Select Skills</option>
+                {% for i in all_skills %}
+                  <option value="{{i.id}}"
+                  
+                  {% if i.skill_name == skill.skill_name %}
+                    selected
+                  {% endif %}
+                    >{{i.skill_name}}</option>
+                {% endfor %}
+            </select><br><br>
+              <label class="form-label" for="form1Example13"
+                >Skill Name</label
+              >
+            </div>
+            
+
+            <!-- Password input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+              <select name="skill_level" style="width: 100%;" class="form-control form-control-lg" id="roleSelect">
+                  <option value="" disabled selected>Select Proficinecy</option>
+                  <option value="beginner"
+                  
+                  {% if skill.skill_level == 'beginner' %}
+                    selected
+                  {% endif %}
+                    
+                  >Beginner</option>
+                  <option value="intermediate"
+                  {% if skill.skill_level == 'intermediate' %}
+                  selected
+                {% endif %}>Intermediate</option>
+                  <option value="expert"
+                  {% if skill.skill_level == 'expert' %}
+                  selected
+                {% endif %}>Expert</option>
+              </select><br><br>
+              <label class="form-label" for="roleSelect">Select Proficinecy</label>
+            </div>
+            <button class="btn btn-success" type="submit">Update Skill</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+{% include 'layouts/footer.html' %}
+    
+{% endblock body %}
+    

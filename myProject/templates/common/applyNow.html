@@ -1,0 +1,76 @@
+{% extends "common/master.html" %}
+
+
+{% block body %}
+
+
+{% include 'layouts/navbar.html' %}
+
+
+<div class="container">
+    <div class="row justify-content-start">
+        {% include 'layouts/messages.html' %}
+        <div class="col-md-6">
+            <div class="profile-card">
+                <img src="/{{data.company_logo}}" class="profile-image" alt="">
+                <p class="my-2 text-lead fs-italic">Posted Time: {{data.create_at}}</p>
+                <h2 class="lead fw-bold fs-6">Company Name: <span class="fw-normal">{{data.company_name}}</span></h2>
+                <h2 class="lead fw-bold">Position: <span class="fw-normal">{{data.job_title}}</span></h2>
+                <p class="lead fw-bold fs-6">Job Description: <span class="fw-normal">{{data.job_description}}</span></p>
+                <p class="lead fw-bold fs-6">Location:  <span class="fw-normal">{{data.job_location}}</span></p>
+                <p class="lead fw-bold fs-6">Qualifications:  <span class="fw-normal">{{data.qualifications}}</span></p>
+                <p class="lead fw-bold fs-6">Salary:  <span class="fw-normal">{{data.salary}} BDT</span></p>
+                <p class="lead fw-bold fs-6">Application Deadline:  <span class="fw-normal">{{data.deadline}}</span></p>
+
+                
+                {% if user.user_type == "seeker" %}
+                    
+                    {% if already_apply %}
+                        <h1 class="text-danger fs-5">You have already applied this job.</h1>
+                    {% else %}
+
+                    <section class="application-form">
+                        <h2 class="text-success">Application Form</h2>
+                        <form action="" method="POST" enctype="multipart/form-data" id="applyForm">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" class="form-control my-2" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" class="form-control my-2" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="resume">Upload Resume</label>
+                                <input type="file" id="resume" class="form-control my-2" name="resume" accept=".pdf,.doc,.docx" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coverLetter">Cover Letter</label>
+                                <textarea id="coverLetter" class="form-control my-2" name="coverLetter" rows="4" required></textarea>
+                            </div>
+                            <button class="btn btn-outline-secondary my-2" type="submit">Submit Application</button>
+                        </form>
+                    </section>
+
+
+
+                    {% endif %}
+                        
+                {% elif user.user_type == "recruiter" and data.user.id == user.id %}     
+                 <a class="btn btn-warning" href="{% url 'job_edit' data.id %}">Edit Job</a> 
+                 <a class="btn btn-success" href="#">Applicants ({{applicants_counting}})</a> 
+                 <a class="btn btn-danger" href="{% url 'job_delete' data.id %}">Delete Job</a>
+
+                {% endif %}
+                    
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'layouts/footer.html' %}
+
+    
+{% endblock body %}
